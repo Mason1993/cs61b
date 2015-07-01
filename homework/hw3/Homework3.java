@@ -105,6 +105,21 @@ public class Homework3 {
 
     System.out.println("\nLet's squish linked lists!\n");
 
+// **********************Self Test Cases Begin*******************
+/*
+    int[] test001 = {3, 7, 7, 4, 5, 5, 2, 0, 8, 8, 5};
+    SList list001 = new SList();
+    for (i = 0; i < test001.length; i++) {
+      list001.insertEnd(new Integer(test001[i]));
+    }
+    System.out.println("squishing " + list001.toString() + ":");
+    list001.squish();
+    result = list001.toString();
+    System.out.println(result);
+    TestHelper.verify(result.equals("[  3  7  4  5  2  0  8  5  ]"),
+                      "BAD SQUISH!!!  No biscuit.");
+// **********************Self Test Cases End *******************
+
     int[] test5 = {3, 7, 7, 7, 4, 5, 5, 2, 0, 8, 8, 8, 8, 5};
     SList list5 = new SList();
     for (i = 0; i < test5.length; i++) {
@@ -116,7 +131,7 @@ public class Homework3 {
     System.out.println(result);
     TestHelper.verify(result.equals("[  3  7  4  5  2  0  8  5  ]"),
                       "BAD SQUISH!!!  No biscuit.");
-
+*/
     int[] test6 = {6, 6, 6, 6, 6, 3, 6, 3, 6, 3, 3, 3, 3, 3, 3};
     SList list6 = new SList();
     for (i = 0; i < test6.length; i++) {
