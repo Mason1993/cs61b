@@ -29,9 +29,12 @@ public class Ocean {
    *  Define any variables associated with an Ocean object here.  These
    *  variables MUST be private.
    */
-
-
-
+    private int oceanWidth;
+    private int oceanHeight;
+    private int starveT;
+    private int [][] oceanGrid;
+    private int [][] hungerGrid;
+    private boolean 
   /**
    *  The following methods are required for Part I.
    */
@@ -46,6 +49,14 @@ public class Ocean {
 
   public Ocean(int i, int j, int starveTime) {
     // Your solution here.
+    oceanWidth = i;
+    oceanHeight = j;
+    starveT = starveTime;
+    oceanGrid = new int [i] [j];
+    hungerGrid = new int [i] [j];
+
+
+
   }
 
   /**
@@ -55,7 +66,7 @@ public class Ocean {
 
   public int width() {
     // Replace the following line with your solution.
-    return 1;
+    return this.oceanWidth;
   }
 
   /**
@@ -65,7 +76,12 @@ public class Ocean {
 
   public int height() {
     // Replace the following line with your solution.
-    return 1;
+    return this.oceanHeight;
+  }
+
+  public void wrap() {
+    x = x % this.oceanWidth;
+    y = y % this.oceanHeight;
   }
 
   /**
@@ -75,7 +91,7 @@ public class Ocean {
 
   public int starveTime() {
     // Replace the following line with your solution.
-    return 1;
+    return this.starveTime;
   }
 
   /**
@@ -87,6 +103,10 @@ public class Ocean {
 
   public void addFish(int x, int y) {
     // Your solution here.
+  }
+
+  public boolean isFish(int x, int y) {
+
   }
 
   /**
@@ -110,7 +130,9 @@ public class Ocean {
 
   public int cellContents(int x, int y) {
     // Replace the following line with your solution.
-    return EMPTY;
+
+    
+     return this.oceanGrid[x][y];
   }
 
   /**
