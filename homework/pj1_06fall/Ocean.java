@@ -88,7 +88,7 @@ public class Ocean {
     if (y < 0) {
       y = y + this.oceanHeight;
     }
-    return x;
+    return y;
   }
 
   /**
@@ -202,13 +202,11 @@ public class Ocean {
     Ocean newOcean = new Ocean (this.oceanWidth, this.oceanHeight, this.starveT);
     newOcean.oceanGrid = this.oceanGrid;
     newOcean.hungerGrid = this.hungerGrid;
-    x = wrapX(x);
-    y = wrapY(y);
     for (int x = 0; x < this.oceanWidth; x++) {
       for (int y = 0; y < this.oceanHeight; y++) {
-        switch (cellContents(i,j)) {
-          case: SHARK {
-            if (hungerGrid(x,y) == 0) {
+        switch (cellContents(x,y)) {
+          case SHARK: {
+            if (this.hungerGrid(x,y) == 0) {
               newOcean.addEmpty(x,y);                             // shark dies because of hunger
             }
             if (neighborArea[2] > 0) {                   // situation 1: fish exists in neighborhood
@@ -226,29 +224,28 @@ public class Ocean {
             break;
           }
 
-          case: FISH {
-            if (neighborArea[1] != 0) {
-              if (neighborArea[1] > 1) {               // situation 4: multiple sharks surround fish
+          case FISH: {
+            if (this.neighborArea[1] != 0) {
+              if (this.neighborArea[1] > 1) {               // situation 4: multiple sharks surround fish
                 newOcean.addEmpty(x,y);
                 newOcean.addShark(x,y);
                 newOcean.hungerGrid[x][y] = starveT;
               } else {                                 //  situation 5: only a single shark surrounding this fish
-                newOcean.addEmpty(x,y) = 0;
+                newOcean.addEmpty(x,y);
               }
             }                                          // situation 3: no shrak, nothing happen; it goes outside if
             break;
           }
 
-          case: EMPTY {
-            if (neighborArea[2] >= 2) {
-              if (neighborArea[1] <= 1) {             // situation 7: multiple fish and none/single shark, born fish
+          case EMPTY: {
+            if (this.neighborArea[2] >= 2) {
+              if (this.neighborArea[1] <= 1) {             // situation 7: multiple fish and none/single shark, born fish
                 newOcean.addFish(x,y);
               } else {                                // situation 8: multiple sharks, born shark
                 newOcean.addShark(x,y);
                 newOcean.hungerGrid(x,y) = starveT;
               }
-            }                                         // situation 6: nothing happen. it goes outside if 
-            } 
+            }                                         // situation 6: nothing happen. it goes outside if  
             break;
           }
           default: {
