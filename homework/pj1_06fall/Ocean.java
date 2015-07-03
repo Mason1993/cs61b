@@ -34,7 +34,6 @@ public class Ocean {
     private int starveT;
     private int [][] oceanGrid;
     private int [][] hungerGrid;
-    private boolean 
   /**
    *  The following methods are required for Part I.
    */
@@ -52,11 +51,8 @@ public class Ocean {
     oceanWidth = i;
     oceanHeight = j;
     starveT = starveTime;
-    oceanGrid = new int [i] [j];
-    hungerGrid = new int [i] [j];
-
-
-
+    oceanGrid = new int [i][j];
+    hungerGrid = new int [i][j];
   }
 
   /**
@@ -79,9 +75,14 @@ public class Ocean {
     return this.oceanHeight;
   }
 
-  public void wrap() {
+  public int wrapX(int x) {
     x = x % this.oceanWidth;
+    return x;
+  }
+
+    public int wrapY(int y) {
     y = y % this.oceanHeight;
+    return x;
   }
 
   /**
@@ -91,7 +92,7 @@ public class Ocean {
 
   public int starveTime() {
     // Replace the following line with your solution.
-    return this.starveTime;
+    return this.starveT;
   }
 
   /**
@@ -103,10 +104,9 @@ public class Ocean {
 
   public void addFish(int x, int y) {
     // Your solution here.
-  }
-
-  public boolean isFish(int x, int y) {
-
+    x = wrapX(x);
+    y = wrapY(y);
+    oceanGrid[x][y] = 2;
   }
 
   /**
@@ -119,6 +119,10 @@ public class Ocean {
 
   public void addShark(int x, int y) {
     // Your solution here.
+    x = wrapX(x);
+    y = wrapY(y);
+    oceanGrid[x][y] = 1;
+    hungerGrid[x][y] = this.starveT;
   }
 
   /**
@@ -130,8 +134,6 @@ public class Ocean {
 
   public int cellContents(int x, int y) {
     // Replace the following line with your solution.
-
-    
      return this.oceanGrid[x][y];
   }
 
@@ -139,6 +141,36 @@ public class Ocean {
    *  timeStep() performs a simulation timestep as described in README.
    *  @return an ocean representing the elapse of one timestep.
    */
+
+  public int[] neighbor(int x, int y) {
+    int [] neighborArea = new int [3];
+    x = wrapX(x);
+    y = wrapY(y);
+    for (i = x-1; i <= x+1; i++) {
+      for (j = y-1; j <= y+1; j++) {
+        switch (cellContents(i,j)) {
+          case EMPTY: {
+                    neighborArea[0]++;
+                    break;
+                  }
+          case SHARK:{
+                    neighborArea[1]++;
+                    break;
+                  }
+          case FISH:{
+                    neighborArea[2]++;
+                    break;
+                  }
+          default:{
+                    System.out.println("cellContents error, program terminated!");
+                    System.exit(0);
+                    break;
+                  }
+        }
+        }
+      }
+      return neighborArea;
+  }
 
   public Ocean timeStep() {
     // Replace the following line with your solution.
