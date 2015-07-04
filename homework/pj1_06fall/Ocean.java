@@ -135,7 +135,7 @@ public class Ocean {
         x = wrapX(x);
         y = wrapY(y);
         oceanGrid[x][y] = 1;
-        hungerGrid[x][y] = this.starveT;
+        hungerGrid[x][y] = this.starveT;   // it is much simpler than creating an 2D array to store object cells, where cell.content and cell.starveTime
       }
       else {
         System.out.println("this cell is not empty, addShark fail!");
@@ -206,9 +206,9 @@ public class Ocean {
     
     for (int x = 0; x < this.oceanWidth; x++) {
       for (int y = 0; y < this.oceanHeight; y++) {
-        int [] neighborArea = neighbor(x,y);             // initialize neighborArea to store neighbor info
-        newOcean.oceanGrid[x][y] = this.oceanGrid[x][y];
-        newOcean.hungerGrid[x][y] = this.hungerGrid[x][y];
+        int [] neighborArea = neighbor(x,y);                // initialize neighborArea to store neighbor info
+        newOcean.oceanGrid[x][y] = this.oceanGrid[x][y];    // initialize oceanGrid one cell by one cell, cant do newOcean.oceanGrid = this.oceanGrid
+        newOcean.hungerGrid[x][y] = this.hungerGrid[x][y];  // same as previous line
         switch (cellContents(x,y)) {
           case SHARK: {
             if (this.hungerGrid[x][y] == 0) {
