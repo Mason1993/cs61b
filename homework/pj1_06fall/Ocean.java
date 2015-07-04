@@ -160,7 +160,9 @@ public class Ocean {
 
   public int cellContents(int x, int y) {
     // Replace the following line with your solution.
-     return this.oceanGrid[x][y];
+    x = wrapX(x);
+    y = wrapY(y);
+    return this.oceanGrid[x][y];
   }
 
   /**
@@ -200,13 +202,16 @@ public class Ocean {
   public Ocean timeStep() {
     // Replace the following line with your solution.
     Ocean newOcean = new Ocean (this.oceanWidth, this.oceanHeight, this.starveT);
-    newOcean.oceanGrid = this.oceanGrid;
-    newOcean.hungerGrid = this.hungerGrid;
+    
+    
     for (int x = 0; x < this.oceanWidth; x++) {
       for (int y = 0; y < this.oceanHeight; y++) {
+        int [] neighborArea = neighbor(x,y);             // initialize neighborArea to store neighbor info
+        newOcean.oceanGrid[x][y] = this.oceanGrid[x][y];
+        newOcean.hungerGrid[x][y] = this.hungerGrid[x][y];
         switch (cellContents(x,y)) {
           case SHARK: {
-            if (this.hungerGrid(x,y) == 0) {
+            if (this.hungerGrid[x][y] == 0) {
               newOcean.addEmpty(x,y);                             // shark dies because of hunger
             }
             if (neighborArea[2] > 0) {                   // situation 1: fish exists in neighborhood
@@ -225,8 +230,8 @@ public class Ocean {
           }
 
           case FISH: {
-            if (this.neighborArea[1] != 0) {
-              if (this.neighborArea[1] > 1) {               // situation 4: multiple sharks surround fish
+            if (neighborArea[1] != 0) {
+              if (neighborArea[1] > 1) {               // situation 4: multiple sharks surround fish
                 newOcean.addEmpty(x,y);
                 newOcean.addShark(x,y);
                 newOcean.hungerGrid[x][y] = starveT;
@@ -238,12 +243,12 @@ public class Ocean {
           }
 
           case EMPTY: {
-            if (this.neighborArea[2] >= 2) {
-              if (this.neighborArea[1] <= 1) {             // situation 7: multiple fish and none/single shark, born fish
+            if (neighborArea[2] >= 2) {
+              if (neighborArea[1] <= 1) {             // situation 7: multiple fish and none/single shark, born fish
                 newOcean.addFish(x,y);
               } else {                                // situation 8: multiple sharks, born shark
                 newOcean.addShark(x,y);
-                newOcean.hungerGrid(x,y) = starveT;
+                newOcean.hungerGrid[x][y] = starveT;
               }
             }                                         // situation 6: nothing happen. it goes outside if  
             break;
