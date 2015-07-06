@@ -43,7 +43,7 @@ public class PixImage {
    */
   public int getWidth() {
     // Replace the following line with your solution.
-    return 1;
+    return this.width;
   }
 
   /**
@@ -53,7 +53,15 @@ public class PixImage {
    */
   public int getHeight() {
     // Replace the following line with your solution.
-    return 1;
+    return this.height;
+  }
+
+    public int wrapX(int x) {
+    x = x % this.oceanWidth;
+    if (x < 0) {
+      x = x + this.oceanWidth;
+    }
+    return x;
   }
 
   /**
