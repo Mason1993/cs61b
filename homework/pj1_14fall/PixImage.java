@@ -73,7 +73,7 @@ public class PixImage {
    */
   public short getRed(int x, int y) {
     // Replace the following line with your solution.
-    return 0;
+    return return (short) image[x][y][0];
   }
 
   /**
@@ -85,7 +85,7 @@ public class PixImage {
    */
   public short getGreen(int x, int y) {
     // Replace the following line with your solution.
-    return 0;
+    return return (short) image[x][y][1];
   }
 
   /**
@@ -97,7 +97,7 @@ public class PixImage {
    */
   public short getBlue(int x, int y) {
     // Replace the following line with your solution.
-    return 0;
+    return return (short) image[x][y][2];
   }
 
   /**
@@ -115,6 +115,9 @@ public class PixImage {
    */
   public void setPixel(int x, int y, short red, short green, short blue) {
     // Your solution here.
+    if (red>0 && red < 256 )  image[x][y][0]= red;
+    if (green>0 && green<256) image[x][y][1]= green; 
+    if (blue>0 && blue<256)   image[x][y][2]= blue;
   }
 
   /**
