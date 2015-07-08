@@ -23,7 +23,7 @@ public class PixImage {
    */
   private int imageWidth;
   private int imageHeight;
-  private int [][] blankImage;
+  private int [][][] blankImage;
 
 
   /**
@@ -37,7 +37,7 @@ public class PixImage {
     // Your solution here.
     imageWidth = width;
     imageHeight = height;
-    int [][] blankImage = new [imageWidth] [imageHeight];
+    int [][][] blankImage = new [imageWidth] [imageHeight] [3];
     return blankImage;
   }
 
@@ -74,7 +74,7 @@ public class PixImage {
   }
   public short getRed(int x, int y) {
     // Replace the following line with your solution.
-    return 0;
+    return this.blankImage[][][0];
   }
 
   /**
@@ -86,7 +86,7 @@ public class PixImage {
    */
   public short getGreen(int x, int y) {
     // Replace the following line with your solution.
-    return 0;
+    return this.blankImage[][][1];
   }
 
   /**
@@ -98,7 +98,7 @@ public class PixImage {
    */
   public short getBlue(int x, int y) {
     // Replace the following line with your solution.
-    return 0;
+    return this.blankImage[][][2];
   }
 
   /**
