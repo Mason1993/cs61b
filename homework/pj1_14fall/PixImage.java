@@ -21,8 +21,9 @@ public class PixImage {
    *  Define any variables associated with a PixImage object here.  These
    *  variables MUST be private.
    */
-
-
+  private int imageWidth;
+  private int imageHeight;
+  private int [][] blankImage;
 
 
   /**
@@ -34,6 +35,10 @@ public class PixImage {
    */
   public PixImage(int width, int height) {
     // Your solution here.
+    imageWidth = width;
+    imageHeight = height;
+    int [][] blankImage = new [imageWidth] [imageHeight];
+    return blankImage;
   }
 
   /**
@@ -43,7 +48,7 @@ public class PixImage {
    */
   public int getWidth() {
     // Replace the following line with your solution.
-    return this.width;
+    return this.imageWidth;
   }
 
   /**
@@ -53,15 +58,7 @@ public class PixImage {
    */
   public int getHeight() {
     // Replace the following line with your solution.
-    return this.height;
-  }
-
-    public int wrapX(int x) {
-    x = x % this.oceanWidth;
-    if (x < 0) {
-      x = x + this.oceanWidth;
-    }
-    return x;
+    return this.imageHeight;
   }
 
   /**
@@ -71,9 +68,13 @@ public class PixImage {
    * @param y the y-coordinate of the pixel.
    * @return the red intensity of the pixel at coordinate (x, y).
    */
+
+  public short imageReflection(int x, int y) {
+
+  }
   public short getRed(int x, int y) {
     // Replace the following line with your solution.
-    return return (short) image[x][y][0];
+    return 0;
   }
 
   /**
@@ -85,7 +86,7 @@ public class PixImage {
    */
   public short getGreen(int x, int y) {
     // Replace the following line with your solution.
-    return return (short) image[x][y][1];
+    return 0;
   }
 
   /**
@@ -97,7 +98,7 @@ public class PixImage {
    */
   public short getBlue(int x, int y) {
     // Replace the following line with your solution.
-    return return (short) image[x][y][2];
+    return 0;
   }
 
   /**
@@ -115,9 +116,6 @@ public class PixImage {
    */
   public void setPixel(int x, int y, short red, short green, short blue) {
     // Your solution here.
-    if (red>0 && red < 256 )  image[x][y][0]= red;
-    if (green>0 && green<256) image[x][y][1]= green; 
-    if (blue>0 && blue<256)   image[x][y][2]= blue;
   }
 
   /**
