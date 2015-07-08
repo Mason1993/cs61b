@@ -70,7 +70,7 @@ public class PixImage {
    */
 
   public short imageReflection(int x, int y) {
-
+    return 1;
   }
   public short getRed(int x, int y) {
     // Replace the following line with your solution.
@@ -116,6 +116,11 @@ public class PixImage {
    */
   public void setPixel(int x, int y, short red, short green, short blue) {
     // Your solution here.
+    if ((0 <= red <= 255) && (0 <= green <= 255) && (0 <= blue <= 255)) {
+      this.blankImage[x][y][0] = red;
+      this.blankImage[x][y][1] = green;
+      this.blankImage[x][y][2] = blue;
+    }
   }
 
   /**
@@ -129,7 +134,16 @@ public class PixImage {
    */
   public String toString() {
     // Replace the following line with your solution.
-    return "";
+    // display pixel(x,y) in this image in the format |intesity of red, intensity of green, intensity of blue|
+    String str = new String();
+    for (int j = 0; j <= this.imageHeight - 1; j++) {  //loop through each column
+      for (int i =0; i <= this.imageWidth - 1; i++) {  //loop through each row
+        str += "|";
+        str += String.valueOf(this.getRed(i,j)) + "," + String.valueOf(this.getGreen(i,j)) + "," + String.valueOf(this.getblue(i,j));
+      }
+      str += "|\n";      
+    } 
+    return str;
   }
 
   /**
