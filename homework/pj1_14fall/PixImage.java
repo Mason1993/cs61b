@@ -23,7 +23,7 @@ public class PixImage {
    */
   private int imageWidth;
   private int imageHeight;
-  private int [][][] blankImage;
+  private int [][][] pixelimage;
 
 
   /**
@@ -37,8 +37,8 @@ public class PixImage {
     // Your solution here.
     imageWidth = width;
     imageHeight = height;
-    int [][][] blankImage = new [imageWidth] [imageHeight] [3];
-    return blankImage;
+    int [][][] pixelimage = new [imageWidth] [imageHeight] [3];
+    return pixelimage;
   }
 
   /**
@@ -74,7 +74,7 @@ public class PixImage {
   }
   public short getRed(int x, int y) {
     // Replace the following line with your solution.
-    return this.blankImage[][][0];
+    return this.pixelimage[][][0];
   }
 
   /**
@@ -86,7 +86,7 @@ public class PixImage {
    */
   public short getGreen(int x, int y) {
     // Replace the following line with your solution.
-    return this.blankImage[][][1];
+    return this.pixelimage[][][1];
   }
 
   /**
@@ -98,7 +98,7 @@ public class PixImage {
    */
   public short getBlue(int x, int y) {
     // Replace the following line with your solution.
-    return this.blankImage[][][2];
+    return this.pixelimage[][][2];
   }
 
   /**
@@ -117,9 +117,9 @@ public class PixImage {
   public void setPixel(int x, int y, short red, short green, short blue) {
     // Your solution here.
     if ((0 <= red <= 255) && (0 <= green <= 255) && (0 <= blue <= 255)) {
-      this.blankImage[x][y][0] = red;
-      this.blankImage[x][y][1] = green;
-      this.blankImage[x][y][2] = blue;
+      this.pixelimage[x][y][0] = red;
+      this.pixelimage[x][y][1] = green;
+      this.pixelimage[x][y][2] = blue;
     }
   }
 
@@ -136,8 +136,9 @@ public class PixImage {
     // Replace the following line with your solution.
     // display pixel(x,y) in this image in the format |intesity of red, intensity of green, intensity of blue|
     String str = new String();
-    for (int j = 0; j <= this.imageHeight - 1; j++) {  //loop through each column
-      for (int i =0; i <= this.imageWidth - 1; i++) {  //loop through each row
+    // looping through  j-th row i-th column
+    for (int j = 0; j <= this.imageHeight - 1; j++) { 
+      for (int i =0; i <= this.imageWidth - 1; i++) { 
         str += "|";
         str += String.valueOf(this.getRed(i,j)) + "," + String.valueOf(this.getGreen(i,j)) + "," + String.valueOf(this.getblue(i,j));
       }
@@ -177,7 +178,33 @@ public class PixImage {
    */
   public PixImage boxBlur(int numIterations) {
     // Replace the following line with your solution.
+    if (numIterations <= 0) {
+      return this.pixelimage;
+    }
+    PixImage blurImage = new PixImage(this.imageWidth,this.imageHeight); 
+    while (numIterations > 0) {
+      for (int j = 0; j <= this.imageHeight - 1; j++) { 
+        for (int i =0; i <= this.imageWidth - 1; i++) {
+        if () 
+          blurImage.pixelimage
+
+    }
     return this;
+  }
+
+  public int numNeighbor(int x, int y, int width, int height) {
+    int numOfNeighbor;
+    if ((x == 0 && y ==0) || (x == width-1 && y == 0) || (x == 0 && y == height-1) || (x == width-1 && y == height-1)) {
+      numOfNeighbor = 4;
+    } else if ((0 < x < width - 1 && y == 0) || (0 < x < width - 1 && y == 0) || (x == 0 && 0 < y < height-1) || (x == width-1 && 0 < y < height-1)) {
+      numOfNeighbor = 6;
+    } else if ( 0 < x < width -1 && 0 < y < height-1 ) {
+      numOfNeighbor = 9;
+    } else {
+      System.out.println("no such pixel location, numNeighbor method error");
+      System.exit(0);
+    }
+    return numOfNeighbor;
   }
 
   /**
