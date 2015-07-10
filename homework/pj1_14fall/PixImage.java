@@ -207,6 +207,25 @@ public class PixImage {
     return numOfNeighbor;
   }
 
+  private int convolution(int x, int y, int numOfNeighbor, int matrixSize, PixImage pixelimage) {
+        int redTotal = 0;
+        int greenTotal = 0;
+        int blueTotal = 0;
+        int offset = matrixSize/2;
+        for (int i = 0; i < matrixSize; i++) {
+            for (int j = 0; j < matrixSize; j++) {
+                int xLoc = x + i - offset;
+                int yLoc = y + j - offset;
+                if (xLoc < 0 || xLoc >= img.width || yLoc < 0 || yLoc >= img.height)
+                    continue;
+                redTotal += img.getRed(xLoc, yLoc);
+                greenTotal += img.getGreen(xLoc, yLoc);
+                blueTotal += img.getBlue(xLoc, yLoc);
+            }
+        }
+        return rgb((short)(redTotal/neighbours), (short)(greenTotal/neighbours), (short)(blueTotal/neighbours));
+    }
+
   /**
    * mag2gray() maps an energy (squared vector magnitude) in the range
    * 0...24,969,600 to a grayscale intensity in the range 0...255.  The map
