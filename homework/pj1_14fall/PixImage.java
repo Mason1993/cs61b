@@ -208,9 +208,9 @@ public class PixImage {
   }
 
   private int convolution(int x, int y, int numOfNeighbor, int matrixSize, PixImage pixelimage) {
-        int redTotal = 0;
-        int greenTotal = 0;
-        int blueTotal = 0;
+        int numOfRed = 0;
+        int numOfGreen = 0;
+        int numOfBlue = 0;
         int offset = matrixSize/2;
         for (int i = 0; i < matrixSize; i++) {
             for (int j = 0; j < matrixSize; j++) {
@@ -218,12 +218,12 @@ public class PixImage {
                 int yLoc = y + j - offset;
                 if (xLoc < 0 || xLoc >= img.width || yLoc < 0 || yLoc >= img.height)
                     continue;
-                redTotal += img.getRed(xLoc, yLoc);
-                greenTotal += img.getGreen(xLoc, yLoc);
-                blueTotal += img.getBlue(xLoc, yLoc);
+                numOfRed += img.getRed(xLoc, yLoc);
+                numOfGreen += img.getGreen(xLoc, yLoc);
+                numOfBlue += img.getBlue(xLoc, yLoc);
             }
         }
-        return rgb((short)(redTotal/neighbours), (short)(greenTotal/neighbours), (short)(blueTotal/neighbours));
+        return rgb((short)(numOfRed/neighbours), (short)(numOfGreen/neighbours), (short)(numOfBlue/neighbours));
     }
 
   /**
