@@ -215,7 +215,7 @@ public class PixImage {
         for (int i = 0; i < matrixSize; i++) {
             for (int j = 0; j < matrixSize; j++) {
                 int xLoc = x + i - offset;
-                int yLoc = y + j - offset;
+                int yLoc = y + j - offset
                 if (xLoc < 0 || xLoc >= img.width || yLoc < 0 || yLoc >= img.height)
                     continue;
                 numOfRed += img.getRed(xLoc, yLoc);
