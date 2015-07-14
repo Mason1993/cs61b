@@ -1,3 +1,5 @@
+package pj01_14fall;
+
 /* PixImage.java */
 
 /**
@@ -21,9 +23,9 @@ public class PixImage {
    *  Define any variables associated with a PixImage object here.  These
    *  variables MUST be private.
    */
-  private int imageWidth;
-  private int imageHeight;
-  private int [][][] pixelimage;
+  private final int imageWidth;
+  private final int imageHeight;
+  private short [][][] pixelimage;
 
 
   /**
@@ -37,8 +39,7 @@ public class PixImage {
     // Your solution here.
     imageWidth = width;
     imageHeight = height;
-    int [][][] pixelimage = new [imageWidth] [imageHeight] [3];
-    return pixelimage;
+    short [][][] pixelimage = new short [imageWidth] [imageHeight] [3];
   }
 
   /**
@@ -69,12 +70,9 @@ public class PixImage {
    * @return the red intensity of the pixel at coordinate (x, y).
    */
 
-  public short imageReflection(int x, int y) {
-    return 1;
-  }
   public short getRed(int x, int y) {
     // Replace the following line with your solution.
-    return this.pixelimage[][][0];
+    return this.pixelimage[x][y][0];
   }
 
   /**
@@ -86,7 +84,7 @@ public class PixImage {
    */
   public short getGreen(int x, int y) {
     // Replace the following line with your solution.
-    return this.pixelimage[][][1];
+    return this.pixelimage[x][y][1];
   }
 
   /**
@@ -98,7 +96,7 @@ public class PixImage {
    */
   public short getBlue(int x, int y) {
     // Replace the following line with your solution.
-    return this.pixelimage[][][2];
+    return this.pixelimage[x][y][2];
   }
 
   /**
@@ -116,10 +114,18 @@ public class PixImage {
    */
   public void setPixel(int x, int y, short red, short green, short blue) {
     // Your solution here.
-    if ((0 <= red <= 255) && (0 <= green <= 255) && (0 <= blue <= 255)) {
+    if ((x >= 0 && x <= imageWidth) && (y >= 0 && y <= imageHeight)) {
+	  if ((red >= 0 && red <= 255) && (green >= 0 && green <= 255) && (blue >= 0 && blue <= 255)) {
       this.pixelimage[x][y][0] = red;
       this.pixelimage[x][y][1] = green;
       this.pixelimage[x][y][2] = blue;
+    } else {
+    	System.out.println("invalid RGB values. Values should be within [0,255]");
+    	System.exit(0);
+    }
+    } else {
+    	System.out.println("x or y value exceeds image boundary");
+    	System.exit(0);
     }
   }
 
@@ -140,7 +146,7 @@ public class PixImage {
     for (int j = 0; j <= this.imageHeight - 1; j++) { 
       for (int i =0; i <= this.imageWidth - 1; i++) { 
         str += "|";
-        str += String.valueOf(this.getRed(i,j)) + "," + String.valueOf(this.getGreen(i,j)) + "," + String.valueOf(this.getblue(i,j));
+        str += String.valueOf(this.getRed(i,j)) + "," + String.valueOf(this.getGreen(i,j)) + "," + String.valueOf(this.getBlue(i,j));
       }
       str += "|\n";      
     } 
@@ -178,7 +184,24 @@ public class PixImage {
    */
   public PixImage boxBlur(int numIterations) {
     // Replace the following line with your solution.
-    if (numIterations <= 0) {
+	   if (numIterations <= 0) {
+		      return this;
+	   } else {
+		   for (int count = 0; count < numIterations; count++) {
+			   for (int x = 0; x <= this.imageWidth; x++) {
+				   for (int y = 0; y <= this.imageHeight; y++) {
+					   int position = posPixel(x, y);
+					   switch (position) {
+					   case 1: 
+						   this.pixelimage[x][y][0] = (short) ((this.pixelimage[x][y][0] + this.pixelimage[x+1][y][0] + this.pixelimage[x][y+1][0] + this.pixelimage[x+1][y+1][0])/4);
+					   }
+				   }
+			   }
+		   }
+	   }
+	  
+/*   
+   if (numIterations <= 0) {
       return this.pixelimage;
     }
     PixImage blurImage = new PixImage(this.imageWidth,this.imageHeight); 
@@ -190,10 +213,49 @@ public class PixImage {
 
     }
     return this;
+*/
   }
 
-  public int numNeighbor(int x, int y, int width, int height) {
-    int numOfNeighbor;
+  public int posPixel(int x, int y) {
+    int posOfNeighbor = 0; // 1 to 9, starting from upper left corner to bottom right corner, zigzag moving
+    // |1|...|2|...|3|
+    // |4|...|5|...|6|
+    // |7|...|8|...|9|
+    if ((x >= 0 && x <= imageWidth) && (y >= 0 && y <= imageHeight)) {
+    	if (x == 0 && y == 0) {
+    		posOfNeighbor = 1;
+    	}
+    	if ((x > 0 && x < imageWidth-1) && y == 0) {
+    		posOfNeighbor = 2;
+    	}
+    	if (x == imageWidth-1 && y == 0) {
+    		posOfNeighbor =3;
+    	}
+    	if (x == 0 && (y > 0 && y < imageHeight-1)) {
+    		posOfNeighbor = 4;
+    	}
+    	if ((x > 0 && x < imageWidth-1) && (y > 0 && y < imageHeight-1)) {
+    		posOfNeighbor = 5;
+    	}
+    	if (x == imageWidth-1 && (y > 0 && y < imageHeight-1)) {
+    		posOfNeighbor = 6;
+    	}
+    	if (x == 0 && y == imageHeight-1) {
+    		posOfNeighbor = 7;
+    	}
+    	if ((x > 0 && x < imageWidth-1) && (y == imageHeight-1)) {
+    		posOfNeighbor =8;
+    	}
+    	if (x == imageWidth-1 && y == imageHeight-1) {
+    		posOfNeighbor = 9;
+    	}
+    } else {
+    	System.out.println("x or y value exceeds image boundary");
+    	System.exit(0);
+    }
+    return posOfNeighbor;
+  }
+    /*
     if ((x == 0 && y ==0) || (x == width-1 && y == 0) || (x == 0 && y == height-1) || (x == width-1 && y == height-1)) {
       numOfNeighbor = 4;
     } else if ((0 < x < width - 1 && y == 0) || (0 < x < width - 1 && y == 0) || (x == 0 && 0 < y < height-1) || (x == width-1 && 0 < y < height-1)) {
@@ -206,6 +268,7 @@ public class PixImage {
     }
     return numOfNeighbor;
   }
+  */
 
   private int convolution(int x, int y, int numOfNeighbor, int matrixSize, PixImage pixelimage) {
         int numOfRed = 0;
