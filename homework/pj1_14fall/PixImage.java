@@ -23,8 +23,8 @@ public class PixImage {
    *  Define any variables associated with a PixImage object here.  These
    *  variables MUST be private.
    */
-  private final int imageWidth;
-  private final int imageHeight;
+  private final short imageWidth;
+  private final short imageHeight;
   private short [][][] pixelimage;
 
 
@@ -35,10 +35,10 @@ public class PixImage {
    * @param width the width of the image.
    * @param height the height of the image.
    */
-  public PixImage(int width, int height) {
+  public PixImage(int width, int height) {   // it's a constructor, not method. Usage: PixImage currImage = new PixImage(a, b);
     // Your solution here.
-    imageWidth = width;
-    imageHeight = height;
+    imageWidth = (short) width;
+    imageHeight = (short) height;
     short [][][] pixelimage = new short [imageWidth] [imageHeight] [3];
   }
 
@@ -201,8 +201,8 @@ public class PixImage {
 	   if (numIterations <= 0) {
 		      return this;
 	   } else {
-		   PixImage currentImage = PixImage(this.imageWidth, this.imageHeight); 
-       PixImage blurImage = PixImage(this.imageWidth, this.imageHeight);
+		   PixImage currentImage = new PixImage((int)imageWidth, (int)imageHeight); 
+       PixImage blurImage = new PixImage((int)imageWidth, (int)imageHeight);
        currentImage = this;
 		   for (int count = 0; count < numIterations; count++) {
 			   for (int x = 0; x <= this.imageWidth; x++) {
@@ -262,6 +262,7 @@ public class PixImage {
 			   }
         currentImage = blurImage;
 		   }
+       return blurImage;
 	   }  
   }
 
@@ -318,7 +319,7 @@ public class PixImage {
     return numOfNeighbor;
   }
   */
-
+/*
   private int convolution(int x, int y, int numOfNeighbor, int matrixSize, PixImage pixelimage) {
         int numOfRed = 0;
         int numOfGreen = 0;
@@ -337,7 +338,7 @@ public class PixImage {
         }
         return rgb((short)(numOfRed/neighbours), (short)(numOfGreen/neighbours), (short)(numOfBlue/neighbours));
     }
-
+*/    
   /**
    * mag2gray() maps an energy (squared vector magnitude) in the range
    * 0...24,969,600 to a grayscale intensity in the range 0...255.  The map
