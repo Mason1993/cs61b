@@ -187,6 +187,7 @@ public class PixImage {
 	   if (numIterations <= 0) {
 		      return this;
 	   } else {
+		   PixImage currentImage = PixImage(this.imageWidth, this.imageHeight); 
 		   for (int count = 0; count < numIterations; count++) {
 			   for (int x = 0; x <= this.imageWidth; x++) {
 				   for (int y = 0; y <= this.imageHeight; y++) {
