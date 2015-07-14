@@ -184,23 +184,6 @@ public class PixImage {
    */
   public PixImage boxBlur(int numIterations) {
     // Replace the following line with your solution.
-	   if (numIterations <= 0) {
-		      return this;
-	   } else {
-		   PixImage currentImage = PixImage(this.imageWidth, this.imageHeight); 
-		   for (int count = 0; count < numIterations; count++) {
-			   for (int x = 0; x <= this.imageWidth; x++) {
-				   for (int y = 0; y <= this.imageHeight; y++) {
-					   int position = posPixel(x, y);
-					   switch (position) {
-					   case 1: 
-						   this.pixelimage[x][y][0] = (short) ((this.pixelimage[x][y][0] + this.pixelimage[x+1][y][0] + this.pixelimage[x][y+1][0] + this.pixelimage[x+1][y+1][0])/4);
-					   }
-				   }
-			   }
-		   }
-	   }
-	  
 /*   
    if (numIterations <= 0) {
       return this.pixelimage;
@@ -215,6 +198,71 @@ public class PixImage {
     }
     return this;
 */
+	   if (numIterations <= 0) {
+		      return this;
+	   } else {
+		   PixImage currentImage = PixImage(this.imageWidth, this.imageHeight); 
+       PixImage blurImage = PixImage(this.imageWidth, this.imageHeight);
+       currentImage = this;
+		   for (int count = 0; count < numIterations; count++) {
+			   for (int x = 0; x <= this.imageWidth; x++) {
+				   for (int y = 0; y <= this.imageHeight; y++) {
+					   int position = posPixel(x, y);
+					   switch (position) {
+					   case 1: 
+						  blurImage.pixelimage[x][y][0] = (short) ((currentImage.pixelimage[x][y][0] + currentImage.pixelimage[x+1][y][0] + currentImage.pixelimage[x][y+1][0] + currentImage.pixelimage[x+1][y+1][0])/4);
+              blurImage.pixelimage[x][y][1] = (short) ((currentImage.pixelimage[x][y][1] + currentImage.pixelimage[x+1][y][1] + currentImage.pixelimage[x][y+1][1] + currentImage.pixelimage[x+1][y+1][1])/4);
+              blurImage.pixelimage[x][y][2] = (short) ((currentImage.pixelimage[x][y][2] + currentImage.pixelimage[x+1][y][2] + currentImage.pixelimage[x][y+1][2] + currentImage.pixelimage[x+1][y+1][2])/4);
+               break;
+              case 2:
+              blurImage.pixelimage[x][y][0] = (short) ((currentImage.pixelimage[x][y][0] + currentImage.pixelimage[x-1][y][0] + currentImage.pixelimage[x+1][y][0] + currentImage.pixelimage[x-1][y+1][0] + currentImage.pixelimage[x][y+1][0] + currentImage.pixelimage[x+1][y+1][0])/6);
+              blurImage.pixelimage[x][y][1] = (short) ((currentImage.pixelimage[x][y][1] + currentImage.pixelimage[x-1][y][1] + currentImage.pixelimage[x+1][y][1] + currentImage.pixelimage[x-1][y+1][1] + currentImage.pixelimage[x][y+1][1] + currentImage.pixelimage[x+1][y+1][1])/6);
+              blurImage.pixelimage[x][y][2] = (short) ((currentImage.pixelimage[x][y][2] + currentImage.pixelimage[x-1][y][2] + currentImage.pixelimage[x+1][y][2] + currentImage.pixelimage[x-1][y+1][2] + currentImage.pixelimage[x][y+1][2] + currentImage.pixelimage[x+1][y+1][2])/6);
+              break;
+              case 3:
+              blurImage.pixelimage[x][y][0] = (short) ((currentImage.pixelimage[x][y][0] + currentImage.pixelimage[x-1][y][0] + currentImage.pixelimage[x+1][y][0] + currentImage.pixelimage[x-1][y+1][0])/4);
+              blurImage.pixelimage[x][y][1] = (short) ((currentImage.pixelimage[x][y][1] + currentImage.pixelimage[x-1][y][1] + currentImage.pixelimage[x+1][y][1] + currentImage.pixelimage[x-1][y+1][1])/4);
+              blurImage.pixelimage[x][y][2] = (short) ((currentImage.pixelimage[x][y][2] + currentImage.pixelimage[x-1][y][2] + currentImage.pixelimage[x+1][y][2] + currentImage.pixelimage[x-1][y+1][2])/4);
+              break;
+              case 4:
+              blurImage.pixelimage[x][y][0] = (short) ((currentImage.pixelimage[x][y][0] + currentImage.pixelimage[x][y-1][0] + currentImage.pixelimage[x+1][y-1][0] + currentImage.pixelimage[x+1][y][0] + currentImage.pixelimage[x][y+1][0] + currentImage.pixelimage[x+1][y+1][0])/6);
+              blurImage.pixelimage[x][y][1] = (short) ((currentImage.pixelimage[x][y][1] + currentImage.pixelimage[x][y-1][1] + currentImage.pixelimage[x+1][y-1][1] + currentImage.pixelimage[x+1][y][1] + currentImage.pixelimage[x][y+1][1] + currentImage.pixelimage[x+1][y+1][1])/6);
+              blurImage.pixelimage[x][y][2] = (short) ((currentImage.pixelimage[x][y][2] + currentImage.pixelimage[x][y-1][2] + currentImage.pixelimage[x+1][y-1][2] + currentImage.pixelimage[x+1][y][2] + currentImage.pixelimage[x][y+1][2] + currentImage.pixelimage[x+1][y+1][2])/6);
+              break;
+              case 5:
+              blurImage.pixelimage[x][y][0] = (short) ((currentImage.pixelimage[x][y][0] + currentImage.pixelimage[x-1][y-1][0] + currentImage.pixelimage[x][y-1][0] + currentImage.pixelimage[x+1][y-1][0] + currentImage.pixelimage[x-1][y][0] + currentImage.pixelimage[x+1][y][0] + currentImage.pixelimage[x-1][y+1][0] + currentImage.pixelimage[x][y+1][0] + currentImage.pixelimage[x+1][y+1][0])/9);
+              blurImage.pixelimage[x][y][1] = (short) ((currentImage.pixelimage[x][y][1] + currentImage.pixelimage[x-1][y-1][1] + currentImage.pixelimage[x][y-1][1] + currentImage.pixelimage[x+1][y-1][1] + currentImage.pixelimage[x-1][y][1] + currentImage.pixelimage[x+1][y][1] + currentImage.pixelimage[x-1][y+1][1] + currentImage.pixelimage[x][y+1][1] + currentImage.pixelimage[x+1][y+1][1])/9);
+              blurImage.pixelimage[x][y][2] = (short) ((currentImage.pixelimage[x][y][2] + currentImage.pixelimage[x-1][y-1][2] + currentImage.pixelimage[x][y-1][2] + currentImage.pixelimage[x+1][y-1][2] + currentImage.pixelimage[x-1][y][2] + currentImage.pixelimage[x+1][y][2] + currentImage.pixelimage[x-1][y+1][2] + currentImage.pixelimage[x][y+1][2] + currentImage.pixelimage[x+1][y+1][2])/9);
+              break;
+              case 6:
+              blurImage.pixelimage[x][y][0] = (short) ((currentImage.pixelimage[x][y][0] + currentImage.pixelimage[x-1][y-1][0] + currentImage.pixelimage[x][y-1][0] + currentImage.pixelimage[x-1][y][0] + currentImage.pixelimage[x-1][y+1][0] + currentImage.pixelimage[x][y+1][0] )/6);
+              blurImage.pixelimage[x][y][1] = (short) ((currentImage.pixelimage[x][y][1] + currentImage.pixelimage[x-1][y-1][1] + currentImage.pixelimage[x][y-1][1] + currentImage.pixelimage[x-1][y][1] + currentImage.pixelimage[x-1][y+1][1] + currentImage.pixelimage[x][y+1][1] )/6);
+              blurImage.pixelimage[x][y][2] = (short) ((currentImage.pixelimage[x][y][2] + currentImage.pixelimage[x-1][y-1][2] + currentImage.pixelimage[x][y-1][2] + currentImage.pixelimage[x-1][y][2] + currentImage.pixelimage[x-1][y+1][2] + currentImage.pixelimage[x][y+1][2] )/6);
+              break;
+              case 7:
+              blurImage.pixelimage[x][y][0] = (short) ((currentImage.pixelimage[x][y][0] + currentImage.pixelimage[x][y-1][0] + currentImage.pixelimage[x+1][y-1][0] + currentImage.pixelimage[x+1][y][0])/4);
+              blurImage.pixelimage[x][y][1] = (short) ((currentImage.pixelimage[x][y][1] + currentImage.pixelimage[x][y-1][1] + currentImage.pixelimage[x+1][y-1][1] + currentImage.pixelimage[x+1][y][1])/4);
+              blurImage.pixelimage[x][y][2] = (short) ((currentImage.pixelimage[x][y][2] + currentImage.pixelimage[x][y-1][2] + currentImage.pixelimage[x+1][y-1][2] + currentImage.pixelimage[x+1][y][2])/4);
+              break;
+              case 8:
+              blurImage.pixelimage[x][y][0] = (short) ((currentImage.pixelimage[x][y][0] + currentImage.pixelimage[x-1][y-1][0] + currentImage.pixelimage[x][y-1][0] + currentImage.pixelimage[x+1][y-1][0] + currentImage.pixelimage[x-1][y][0] + currentImage.pixelimage[x+1][y][0])/6);
+              blurImage.pixelimage[x][y][1] = (short) ((currentImage.pixelimage[x][y][1] + currentImage.pixelimage[x-1][y-1][1] + currentImage.pixelimage[x][y-1][1] + currentImage.pixelimage[x+1][y-1][1] + currentImage.pixelimage[x-1][y][1] + currentImage.pixelimage[x+1][y][1])/6);
+              blurImage.pixelimage[x][y][2] = (short) ((currentImage.pixelimage[x][y][2] + currentImage.pixelimage[x-1][y-1][2] + currentImage.pixelimage[x][y-1][2] + currentImage.pixelimage[x+1][y-1][2] + currentImage.pixelimage[x-1][y][2] + currentImage.pixelimage[x+1][y][2])/6);
+              break;
+              case 9:
+              blurImage.pixelimage[x][y][0] = (short) ((currentImage.pixelimage[x][y][0] + currentImage.pixelimage[x-1][y-1][0] + currentImage.pixelimage[x][y-1][0] + currentImage.pixelimage[x-1][y][0])/4);
+              blurImage.pixelimage[x][y][1] = (short) ((currentImage.pixelimage[x][y][1] + currentImage.pixelimage[x-1][y-1][1] + currentImage.pixelimage[x][y-1][1] + currentImage.pixelimage[x-1][y][1])/4);
+              blurImage.pixelimage[x][y][2] = (short) ((currentImage.pixelimage[x][y][2] + currentImage.pixelimage[x-1][y-1][2] + currentImage.pixelimage[x][y-1][2] + currentImage.pixelimage[x-1][y][2])/4);
+              break;
+              default:
+              System.out.println("invalid position of pixel. position should be within [1,9]");
+              System.exit(0);              
+					   }
+				   }
+			   }
+        currentImage = blurImage;
+		   }
+	   }  
   }
 
   public int posPixel(int x, int y) {
