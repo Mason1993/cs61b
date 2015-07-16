@@ -1,5 +1,3 @@
-package pj01_14fall;
-
 /* PixImage.java */
 
 /**
@@ -39,7 +37,7 @@ public class PixImage {
     // Your solution here.
     imageWidth = (short) width;
     imageHeight = (short) height;
-    short [][][] pixelimage = new short [imageWidth] [imageHeight] [3];
+    pixelimage = new short [imageWidth] [imageHeight] [3];
   }
 
   /**
@@ -205,9 +203,10 @@ public class PixImage {
        PixImage blurImage = new PixImage((int)imageWidth, (int)imageHeight);
        currentImage = this;
 		   for (int count = 0; count < numIterations; count++) {
-			   for (int x = 0; x <= this.imageWidth; x++) {
-				   for (int y = 0; y <= this.imageHeight; y++) {
+			   for (int x = 0; x <= this.imageWidth-1; x++) {
+				   for (int y = 0; y <= this.imageHeight-1; y++) {
 					   int position = posPixel(x, y);
+             //System.out.println(position);
 					   switch (position) {
 					   case 1: 
 						  blurImage.pixelimage[x][y][0] = (short) ((currentImage.pixelimage[x][y][0] + currentImage.pixelimage[x+1][y][0] + currentImage.pixelimage[x][y+1][0] + currentImage.pixelimage[x+1][y+1][0])/4);
@@ -220,9 +219,9 @@ public class PixImage {
               blurImage.pixelimage[x][y][2] = (short) ((currentImage.pixelimage[x][y][2] + currentImage.pixelimage[x-1][y][2] + currentImage.pixelimage[x+1][y][2] + currentImage.pixelimage[x-1][y+1][2] + currentImage.pixelimage[x][y+1][2] + currentImage.pixelimage[x+1][y+1][2])/6);
               break;
               case 3:
-              blurImage.pixelimage[x][y][0] = (short) ((currentImage.pixelimage[x][y][0] + currentImage.pixelimage[x-1][y][0] + currentImage.pixelimage[x+1][y][0] + currentImage.pixelimage[x-1][y+1][0])/4);
-              blurImage.pixelimage[x][y][1] = (short) ((currentImage.pixelimage[x][y][1] + currentImage.pixelimage[x-1][y][1] + currentImage.pixelimage[x+1][y][1] + currentImage.pixelimage[x-1][y+1][1])/4);
-              blurImage.pixelimage[x][y][2] = (short) ((currentImage.pixelimage[x][y][2] + currentImage.pixelimage[x-1][y][2] + currentImage.pixelimage[x+1][y][2] + currentImage.pixelimage[x-1][y+1][2])/4);
+              blurImage.pixelimage[x][y][0] = (short) ((currentImage.pixelimage[x][y][0] + currentImage.pixelimage[x-1][y][0] + currentImage.pixelimage[x-1][y+1][0] + currentImage.pixelimage[x][y+1][0])/4);
+              blurImage.pixelimage[x][y][1] = (short) ((currentImage.pixelimage[x][y][1] + currentImage.pixelimage[x-1][y][1] + currentImage.pixelimage[x-1][y+1][1] + currentImage.pixelimage[x][y+1][1])/4);
+              blurImage.pixelimage[x][y][2] = (short) ((currentImage.pixelimage[x][y][2] + currentImage.pixelimage[x-1][y][2] + currentImage.pixelimage[x-1][y+1][2] + currentImage.pixelimage[x][y+1][2])/4);
               break;
               case 4:
               blurImage.pixelimage[x][y][0] = (short) ((currentImage.pixelimage[x][y][0] + currentImage.pixelimage[x][y-1][0] + currentImage.pixelimage[x+1][y-1][0] + currentImage.pixelimage[x+1][y][0] + currentImage.pixelimage[x][y+1][0] + currentImage.pixelimage[x+1][y+1][0])/6);
@@ -267,10 +266,11 @@ public class PixImage {
   }
 
   public int posPixel(int x, int y) {
-    int posOfNeighbor = 0; // 1 to 9, starting from upper left corner to bottom right corner, zigzag moving
+    // 1 to 9, starting from upper left corner to bottom right corner, zigzag moving
     // |1|...|2|...|3|
     // |4|...|5|...|6|
     // |7|...|8|...|9|
+    int posOfNeighbor = 0;
     if ((x >= 0 && x <= imageWidth) && (y >= 0 && y <= imageHeight)) {
     	if (x == 0 && y == 0) {
     		posOfNeighbor = 1;
@@ -299,6 +299,8 @@ public class PixImage {
     	if (x == imageWidth-1 && y == imageHeight-1) {
     		posOfNeighbor = 9;
     	}
+
+      //System.out.println("x: " + x + "y: " + y);
     } else {
     	System.out.println("x or y value exceeds image boundary");
     	System.exit(0);
