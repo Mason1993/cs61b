@@ -182,28 +182,14 @@ public class PixImage {
    */
   public PixImage boxBlur(int numIterations) {
     // Replace the following line with your solution.
-/*   
-   if (numIterations <= 0) {
-      return this.pixelimage;
-    }
-    PixImage blurImage = new PixImage(this.imageWidth,this.imageHeight); 
-    while (numIterations > 0) {
-      for (int j = 0; j <= this.imageHeight - 1; j++) { 
-        for (int i =0; i <= this.imageWidth - 1; i++) {
-        if () 
-          blurImage.pixelimage
-
-    }
-    return this;
-*/
 	   if (numIterations <= 0) {
 		      return this;
 	   } else {
 		   PixImage currentImage = new PixImage(imageWidth, imageHeight); 
-       PixImage blurImage = null;    // the key of iterator 1
+       PixImage blurImage = null;    // the key 1 of iterato, declare it first 
        currentImage = this;
 		   for (int count = 0; count < numIterations; count++) {
-         blurImage = new PixImage(imageWidth, imageHeight);  // the key of iterator 2
+         blurImage = new PixImage(imageWidth, imageHeight);  // the key 2 of iterator, need to initialize it every time
 			   for (int x = 0; x <= this.imageWidth-1; x++) {
 				   for (int y = 0; y <= this.imageHeight-1; y++) {
 					   int position = posPixel(x, y);
@@ -261,8 +247,8 @@ public class PixImage {
 				   }
 			   }
         currentImage = blurImage;
-        //System.out.println("current Image is: " + currentImage);
-        //System.out.println("blurred Image is: " + blurImage);
+        // System.out.println("current Image is: " + currentImage);
+        // System.out.println("blurred Image is: " + blurImage);
 		   }
        return blurImage;
 	   }  
