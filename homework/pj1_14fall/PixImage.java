@@ -260,6 +260,7 @@ public class PixImage {
 				   }
 			   }
         currentImage = blurImage;
+        //System.out.println(blurImage);
 		   }
        return blurImage;
 	   }  
@@ -470,6 +471,18 @@ public class PixImage {
     // Be forwarned that when you write arrays directly in Java as below,
     // each "row" of text is a column of your image--the numbers get
     // transposed.
+    
+    PixImage image0 = array2PixImage(new int[][] { { 40, 108, 155 },
+                                                   { 81, 137, 187 },
+                                                   { 120, 164, 218 } });
+    doTest(image0.boxBlur(1).equals(
+           array2PixImage(new int[][] { { 91, 118, 146 },
+                                        { 108, 134, 161 },
+                                        { 125, 151, 176 } })),
+           "Incorrect box blur (1 rep):\n" + image0.boxBlur(1));
+    
+
+
     PixImage image1 = array2PixImage(new int[][] { { 0, 10, 240 },
                                                    { 30, 120, 250 },
                                                    { 80, 250, 255 } });
