@@ -200,9 +200,10 @@ public class PixImage {
 		      return this;
 	   } else {
 		   PixImage currentImage = new PixImage(imageWidth, imageHeight); 
-       PixImage blurImage = new PixImage(imageWidth, imageHeight);
+       PixImage blurImage = null;    // the key of iterator 1
        currentImage = this;
 		   for (int count = 0; count < numIterations; count++) {
+         blurImage = new PixImage(imageWidth, imageHeight);  // the key of iterator 2
 			   for (int x = 0; x <= this.imageWidth-1; x++) {
 				   for (int y = 0; y <= this.imageHeight-1; y++) {
 					   int position = posPixel(x, y);
@@ -260,7 +261,8 @@ public class PixImage {
 				   }
 			   }
         currentImage = blurImage;
-        System.out.println("current Image is: " + currentImage);
+        //System.out.println("current Image is: " + currentImage);
+        //System.out.println("blurred Image is: " + blurImage);
 		   }
        return blurImage;
 	   }  
@@ -308,40 +310,7 @@ public class PixImage {
     }
     return posOfNeighbor;
   }
-    /*
-    if ((x == 0 && y ==0) || (x == width-1 && y == 0) || (x == 0 && y == height-1) || (x == width-1 && y == height-1)) {
-      numOfNeighbor = 4;
-    } else if ((0 < x < width - 1 && y == 0) || (0 < x < width - 1 && y == 0) || (x == 0 && 0 < y < height-1) || (x == width-1 && 0 < y < height-1)) {
-      numOfNeighbor = 6;
-    } else if ( 0 < x < width -1 && 0 < y < height-1 ) {
-      numOfNeighbor = 9;
-    } else {
-      System.out.println("no such pixel location, numNeighbor method error");
-      System.exit(0);
-    }
-    return numOfNeighbor;
-  }
-  */
-/*
-  private int convolution(int x, int y, int numOfNeighbor, int matrixSize, PixImage pixelimage) {
-        int numOfRed = 0;
-        int numOfGreen = 0;
-        int numOfBlue = 0;
-        int offset = matrixSize/2;
-        for (int i = 0; i < matrixSize; i++) {
-            for (int j = 0; j < matrixSize; j++) {
-                int xLoc = x + i - offset;
-                int yLoc = y + j - offset
-                if (xLoc < 0 || xLoc >= img.width || yLoc < 0 || yLoc >= img.height)
-                    continue;
-                numOfRed += img.getRed(xLoc, yLoc);
-                numOfGreen += img.getGreen(xLoc, yLoc);
-                numOfBlue += img.getBlue(xLoc, yLoc);
-            }
-        }
-        return rgb((short)(numOfRed/neighbours), (short)(numOfGreen/neighbours), (short)(numOfBlue/neighbours));
-    }
-*/    
+ 
   /**
    * mag2gray() maps an energy (squared vector magnitude) in the range
    * 0...24,969,600 to a grayscale intensity in the range 0...255.  The map
@@ -471,22 +440,6 @@ public class PixImage {
     // Be forwarned that when you write arrays directly in Java as below,
     // each "row" of text is a column of your image--the numbers get
     // transposed.
-    PixImage image1 = array2PixImage(new int[][] { { 0, 10, 240 },
-                                                   { 30, 120, 250 },
-                                                   { 80, 250, 255 } });
-    System.out.println(image1.boxBlur(1));
-    PixImage image2 = image1.boxBlur(2);
-    /*
-    PixImage image0 = array2PixImage(new int[][] { { 40, 108, 155 },
-                                                   { 81, 137, 187 },
-                                                   { 120, 164, 218 } });
-    doTest(image0.boxBlur(1).equals(
-           array2PixImage(new int[][] { { 91, 118, 146 },
-                                        { 108, 134, 161 },
-                                        { 125, 151, 176 } })),
-           "Incorrect box blur (1 rep):\n" + image0.boxBlur(1));
-    
-
 
     PixImage image1 = array2PixImage(new int[][] { { 0, 10, 240 },
                                                    { 30, 120, 250 },
@@ -539,6 +492,6 @@ public class PixImage {
            array2PixImage(new int[][] { { 122, 143, 74 },
                                         { 74, 143, 122 } })),
            "Incorrect Sobel:\n" + image2.sobelEdges());
-  */
+  
   }
 }
