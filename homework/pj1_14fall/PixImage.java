@@ -339,11 +339,68 @@ public class PixImage {
    */
   public PixImage sobelEdges() {
     // Replace the following line with your solution.
-    return this;
+    int [][] matrixX = {
+      {1, 0 ,-1},
+      {2, 0, -2},
+      {1, 0, -1}
+    };
+    int [][] matrixY = {
+      {1, 2, 1},
+      {0, 0, 0},
+      {-1, -2, -1}
+    };
+    PixImage sobelImage = new PixImage(this.imageWidth, this.imageHeight);
+    for (int x = 0; x <= this.imageWidth-1; x++) {
+      for (int y = 0; y <= this.imageHeight-1; y++) {
+        int position = posPixel(x,y);
+        long energy = 0;
+        for (int color = 0; color <=2;  color++) {
+          long gx = 0;
+          long gy = 0;
+          for (int i = -1; i <= 1; i++) {
+            for (int j = -1; j <= 1; j++) {
+              gx += matrixX[i+1][j+1] * this.pixelimage[reflectX(x+i)][reflectY(y+j)][color];
+              gy += matrixY[i+1][j+1] * this.pixelimage[reflectX(x+i)][reflectY(y+j)][color];
+              energy += gx * gx + gy * gy;
+            }
+          }
+          }
+          short intesity = mag2gray(energy);
+          sobelImage.setPixel(x, y, intesity, intesity, intesity);
+        }
+      }
+    return sobelImage;
     // Don't forget to use the method mag2gray() above to convert energies to
     // pixel intensities.
   }
 
+  public int reflectX (int x) {  
+    if (x == -1) {
+      x++;
+    } else if (x == this.imageWidth) {
+      x--;
+    } else if (x >= 0 && x <= this.imageWidth-1) {
+      x = x; // not on the boundary, x remain same;
+    } else {
+      System.out.println("invalid coordinate of x for pixel(x,y). coordinate should be within [0,imageWidth-1]");
+      System.exit(0); 
+    }
+    return x;
+  }
+
+  public int reflectY (int y) {
+    if (y == -1) {
+      y++;
+    } else if (y == this.imageHeight) {
+      y--;
+    } else if (y >= 0 && y <= this.imageHeight-1) {
+      y = y; // not on the boundary, y remain same;
+    } else {
+      System.out.println("invalid coordinate y for pixel(x,y). coordinate y should be within [0,imageHeight-1]");
+      System.exit(0); 
+    }
+    return y;
+  }
 
   /**
    * TEST CODE:  YOU DO NOT NEED TO FILL IN ANY METHODS BELOW THIS POINT.
