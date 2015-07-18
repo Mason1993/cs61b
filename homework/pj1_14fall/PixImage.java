@@ -356,20 +356,21 @@ public class PixImage {
         for (int color = 0; color <=2;  color++) {
           long gx = 0;
           long gy = 0;
-          
+          /*
           gx = this.pixelimage[reflectX(x+1)][reflectY(y-1)][color] + 2*this.pixelimage[reflectX(x+1)][reflectY(y)][color] + this.pixelimage[reflectX(x+1)][reflectY(y+1)][color] - this.pixelimage[reflectX(x-1)][reflectY(y-1)][color] - 2*this.pixelimage[reflectX(x-1)][reflectY(y)][color] - this.pixelimage[reflectX(x-1)][reflectY(y+1)][color];   
           gy = this.pixelimage[reflectX(x-1)][reflectY(y+1)][color] + 2*this.pixelimage[reflectX(x)][reflectY(y+1)][color] + this.pixelimage[reflectX(x+1)][reflectY(y+1)][color] - this.pixelimage[reflectX(x-1)][reflectY(y-1)][color] - 2*this.pixelimage[reflectX(x)][reflectY(y-1)][color] - this.pixelimage[reflectX(x+1)][reflectY(y-1)][color]; 
           energy += gx * gx + gy * gy;  
-          
-          /*
+          */
+        
           for (int i = -1; i <= 1; i++) {
             for (int j = -1; j <= 1; j++) {  // in this program, x indicates x-th column, y indicates y-th column;
-              gx += matrixX[i+1][j+1] * this.pixelimage[reflectY(y+j)][reflectX(x-i)][color];
-              gy += matrixY[i+1][j+1] * this.pixelimage[reflectY(y+j)][reflectX(x-i)][color];
+              gx += matrixX[i+1][j+1] * this.pixelimage[reflectX(x-j)][reflectY(y+i)][color];
+              //System.out.println("multi: " + matrixX[i+1][j+1] * this.pixelimage[reflectY(y+j)][reflectX(x-i)][color]);
+              gy += matrixY[i+1][j+1] * this.pixelimage[reflectX(x+j)][reflectY(y-i)][color];
               energy += gx * gx + gy * gy;
             }
           }
-          */
+          
           }
           short intesity = mag2gray(energy);
           sobelImage.setPixel(x, y, intesity, intesity, intesity);
@@ -538,7 +539,7 @@ public class PixImage {
            "Incorrect box blur (1 rep):\n" + image2.boxBlur(1));
 
     System.out.println("Testing edge detection on a 2x3 image.");
-    doTest(image2.sobelEdges().equals(
+    doTest(image2.sobelEdges().equals( 
            array2PixImage(new int[][] { { 122, 143, 74 },
                                         { 74, 143, 122 } })),
            "Incorrect Sobel:\n" + image2.sobelEdges());
