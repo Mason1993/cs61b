@@ -352,23 +352,30 @@ public class PixImage {
     PixImage sobelImage = new PixImage(this.imageWidth, this.imageHeight);
     for (int x = 0; x <= this.imageWidth-1; x++) {
       for (int y = 0; y <= this.imageHeight-1; y++) {
-        int position = posPixel(x,y);
         long energy = 0;
         for (int color = 0; color <=2;  color++) {
           long gx = 0;
           long gy = 0;
+          
+          gx = this.pixelimage[reflectX(x+1)][reflectY(y-1)][color] + 2*this.pixelimage[reflectX(x+1)][reflectY(y)][color] + this.pixelimage[reflectX(x+1)][reflectY(y+1)][color] - this.pixelimage[reflectX(x-1)][reflectY(y-1)][color] - 2*this.pixelimage[reflectX(x-1)][reflectY(y)][color] - this.pixelimage[reflectX(x-1)][reflectY(y+1)][color];   
+          gy = this.pixelimage[reflectX(x-1)][reflectY(y+1)][color] + 2*this.pixelimage[reflectX(x)][reflectY(y+1)][color] + this.pixelimage[reflectX(x+1)][reflectY(y+1)][color] - this.pixelimage[reflectX(x-1)][reflectY(y-1)][color] - 2*this.pixelimage[reflectX(x)][reflectY(y-1)][color] - this.pixelimage[reflectX(x+1)][reflectY(y-1)][color]; 
+          energy += gx * gx + gy * gy;  
+          
+          /*
           for (int i = -1; i <= 1; i++) {
-            for (int j = -1; j <= 1; j++) {
-              gx += matrixX[i+1][j+1] * this.pixelimage[reflectX(x+i)][reflectY(y+j)][color];
-              gy += matrixY[i+1][j+1] * this.pixelimage[reflectX(x+i)][reflectY(y+j)][color];
+            for (int j = -1; j <= 1; j++) {  // in this program, x indicates x-th column, y indicates y-th column;
+              gx += matrixX[i+1][j+1] * this.pixelimage[reflectY(y+j)][reflectX(x-i)][color];
+              gy += matrixY[i+1][j+1] * this.pixelimage[reflectY(y+j)][reflectX(x-i)][color];
               energy += gx * gx + gy * gy;
             }
           }
+          */
           }
           short intesity = mag2gray(energy);
           sobelImage.setPixel(x, y, intesity, intesity, intesity);
         }
       }
+      //System.out.println("sobelImage is\n" + sobelImage);
     return sobelImage;
     // Don't forget to use the method mag2gray() above to convert energies to
     // pixel intensities.
