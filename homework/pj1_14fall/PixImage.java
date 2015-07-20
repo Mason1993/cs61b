@@ -356,12 +356,12 @@ public class PixImage {
         for (int color = 0; color <=2;  color++) {
           long gx = 0;
           long gy = 0;
-          /*
+          
           gx = this.pixelimage[reflectX(x+1)][reflectY(y-1)][color] + 2*this.pixelimage[reflectX(x+1)][reflectY(y)][color] + this.pixelimage[reflectX(x+1)][reflectY(y+1)][color] - this.pixelimage[reflectX(x-1)][reflectY(y-1)][color] - 2*this.pixelimage[reflectX(x-1)][reflectY(y)][color] - this.pixelimage[reflectX(x-1)][reflectY(y+1)][color];   
           gy = this.pixelimage[reflectX(x-1)][reflectY(y+1)][color] + 2*this.pixelimage[reflectX(x)][reflectY(y+1)][color] + this.pixelimage[reflectX(x+1)][reflectY(y+1)][color] - this.pixelimage[reflectX(x-1)][reflectY(y-1)][color] - 2*this.pixelimage[reflectX(x)][reflectY(y-1)][color] - this.pixelimage[reflectX(x+1)][reflectY(y-1)][color]; 
           energy += gx * gx + gy * gy;  
-          */
-        
+          
+          /*
           for (int i = -1; i <= 1; i++) {
             for (int j = -1; j <= 1; j++) {  // in this program, x indicates x-th column, y indicates y-th column;
               gx += matrixX[i+1][j+1] * this.pixelimage[reflectX(x-j)][reflectY(y+i)][color];
@@ -370,7 +370,7 @@ public class PixImage {
               energy += gx * gx + gy * gy;
             }
           }
-          
+          */
           }
           short intesity = mag2gray(energy);
           sobelImage.setPixel(x, y, intesity, intesity, intesity);
