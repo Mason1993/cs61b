@@ -339,16 +339,7 @@ public class PixImage {
    */
   public PixImage sobelEdges() {
     // Replace the following line with your solution.
-    int [][] matrixX = {
-      {1, 0 ,-1},
-      {2, 0, -2},
-      {1, 0, -1}
-    };
-    int [][] matrixY = {
-      {1, 2, 1},
-      {0, 0, 0},
-      {-1, -2, -1}
-    };
+
     PixImage sobelImage = new PixImage(this.imageWidth, this.imageHeight);
     for (int x = 0; x <= this.imageWidth-1; x++) {
       for (int y = 0; y <= this.imageHeight-1; y++) {
@@ -356,12 +347,25 @@ public class PixImage {
         for (int color = 0; color <=2;  color++) {
           long gx = 0;
           long gy = 0;
-          
+
+          // Where is the discrepency between the universal method and hard coded method
+          // hard coded method
           gx = this.pixelimage[reflectX(x+1)][reflectY(y-1)][color] + 2*this.pixelimage[reflectX(x+1)][reflectY(y)][color] + this.pixelimage[reflectX(x+1)][reflectY(y+1)][color] - this.pixelimage[reflectX(x-1)][reflectY(y-1)][color] - 2*this.pixelimage[reflectX(x-1)][reflectY(y)][color] - this.pixelimage[reflectX(x-1)][reflectY(y+1)][color];   
           gy = this.pixelimage[reflectX(x-1)][reflectY(y+1)][color] + 2*this.pixelimage[reflectX(x)][reflectY(y+1)][color] + this.pixelimage[reflectX(x+1)][reflectY(y+1)][color] - this.pixelimage[reflectX(x-1)][reflectY(y-1)][color] - 2*this.pixelimage[reflectX(x)][reflectY(y-1)][color] - this.pixelimage[reflectX(x+1)][reflectY(y-1)][color]; 
-          energy += gx * gx + gy * gy;  
+          energy += gx * gx + gy * gy;          
           
+          // Universal method
           /*
+          int [][] matrixX = {
+            {1, 0 ,-1},
+            {2, 0, -2},
+            {1, 0, -1}
+          };
+          int [][] matrixY = {
+            {1, 2, 1},
+            {0, 0, 0},
+            {-1, -2, -1}
+          };
           for (int i = -1; i <= 1; i++) {
             for (int j = -1; j <= 1; j++) {  // in this program, x indicates x-th column, y indicates y-th column;
               gx += matrixX[i+1][j+1] * this.pixelimage[reflectX(x-j)][reflectY(y+i)][color];
@@ -371,6 +375,7 @@ public class PixImage {
             }
           }
           */
+          
           }
           short intesity = mag2gray(energy);
           sobelImage.setPixel(x, y, intesity, intesity, intesity);
